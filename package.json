@@ -1,5 +1,5 @@
 {
-  "name": "oneblink-graphql-node-sdk",
+  "name": "oneblink-graphql-sdk",
   "version": "0.1.0",
   "description": "",
   "main": "./dist/index.js",
