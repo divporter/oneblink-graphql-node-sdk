@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "type-graphql";
+import { createUnionType, Field, ObjectType } from "type-graphql";
 import {
   ApprovalTypes,
   MiscTypes,
@@ -6,7 +6,12 @@ import {
   SchedulingTypes,
 } from "@oneblink/types";
 
-import { JSONScalar } from "../JSON";
+import { FormApprovalFlowInstance, FormSubmissionApproval } from "../Approval";
+import {
+  FormPaymentEvent,
+  SchedulingSubmissionEvent,
+  FormWorkFlowEvent,
+} from "../SubmissionEvent";
 import { UserProfileType } from "../UserProfile";
 
 @ObjectType()
@@ -17,6 +22,35 @@ class Key {
   @Field()
   name!: string;
 }
+
+@ObjectType()
+class ValidationResultInvalid {
+  @Field((type) => Boolean)
+  isInvalid!: true;
+
+  @Field()
+  error!: string;
+}
+
+@ObjectType()
+class ValidationResultValid {
+  @Field((type) => Boolean)
+  isInvalid!: false;
+}
+
+const ValidationResult = createUnionType({
+  name: "ValidationResult",
+  types: () => [ValidationResultInvalid, ValidationResultValid] as const,
+  resolveType: (value) => {
+    if (value.isInvalid) {
+      return ValidationResultValid;
+    }
+    if (!value.isInvalid) {
+      return ValidationResultInvalid;
+    }
+    return undefined;
+  },
+});
 
 @ObjectType()
 class FormSubmissionMeta {
@@ -47,28 +81,27 @@ class FormSubmissionMeta {
   @Field((type) => UserProfileType, { nullable: true })
   user?: MiscTypes.UserProfile & {};
 
-  @Field((type) => JSONScalar)
+  @Field((type) => ValidationResult, { nullable: true })
   validationResult?: SubmissionTypes.FormSubmissionMeta["validationResult"];
 }
 
 @ObjectType()
 export class FormSubmissionMetaResult {
-  //TODO go deeper
-  @Field((type) => JSONScalar, { nullable: true })
+  @Field((type) => FormApprovalFlowInstance, { nullable: true })
   formApprovalFlowInstance?: ApprovalTypes.FormApprovalFlowInstance & {};
 
-  @Field((type) => [JSONScalar], { nullable: true })
+  @Field((type) => [FormSubmissionApproval], { nullable: true })
   formSubmissionApprovals?: ApprovalTypes.FormSubmissionApproval[];
 
   @Field((type) => FormSubmissionMeta, { nullable: true })
   formSubmissionMeta?: SubmissionTypes.FormSubmissionMeta & {};
 
-  @Field((type) => [JSONScalar], { nullable: true })
+  @Field((type) => [FormPaymentEvent], { nullable: true })
   formSubmissionPayments?: SubmissionTypes.FormSubmissionPayment[];
 
-  @Field((type) => JSONScalar, { nullable: true })
+  @Field((type) => SchedulingSubmissionEvent, { nullable: true })
   formSubmissionSchedulingBooking?: SchedulingTypes.SchedulingBooking & {};
 
-  @Field((type) => [JSONScalar], { nullable: true })
+  @Field((type) => [FormWorkFlowEvent], { nullable: true })
   formSubmissionWorkflowEvents?: SubmissionTypes.FormSubmissionWorkflowEvent[];
 }

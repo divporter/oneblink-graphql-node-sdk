@@ -11,6 +11,10 @@ import {
   FormWorkFlowEvent,
   SchedulingSubmissionEvent,
 } from "../graphql-types/SubmissionEvent";
+import {
+  ApprovalConfiguration,
+  FormApprovalStep,
+} from "../graphql-types/Approval";
 import { JSONScalar } from "../graphql-types/JSON";
 
 @InterfaceType()
@@ -25,7 +29,7 @@ export abstract class NewFormType {
   formsAppIds!: number[];
 
   //TODO go deeper on the types
-  @Field((type) => JSONScalar, { nullable: true })
+  @Field((type) => ApprovalConfiguration, { nullable: true })
   approvalConfiguration?: {
     approveCannedResponses?: ApprovalTypes.FormApprovalCannedResponse[];
     clarificationRequestCannedResponses?: ApprovalTypes.FormApprovalCannedResponse[];
@@ -37,7 +41,7 @@ export abstract class NewFormType {
   approvalEvents?: SubmissionEventTypes.FormWorkflowEvent[];
 
   //TODO go deeper on the types
-  @Field((type) => [JSONScalar], { nullable: true })
+  @Field((type) => [FormApprovalStep], { nullable: true })
   approvalSteps?: ApprovalTypes.FormApprovalFlowStep[];
 
   @Field()

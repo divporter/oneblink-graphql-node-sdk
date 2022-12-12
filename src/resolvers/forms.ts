@@ -36,7 +36,6 @@ export class FormsResolver {
     @Args()
     newForm: CreateFormArgs
   ) {
-    //@ts-expect-error fudge it
     return await this.formsService.createForm(newForm);
   }
 
@@ -105,7 +104,10 @@ export class FormsResolver {
     return await this.formsService.searchForms(formSearchOptions);
   }
 
-  @Query((returns) => [FormSubmissionHistorySearchResults])
+  @Query((returns) => [FormSubmissionHistorySearchResults], {
+    description:
+      "Search for details on submissions that match the search parameters. Then use the information to fetch the actual submission data, if it is still available",
+  })
   async searchSubmissions(
     @Args() options: FormSubmissionHistorySearchParameters
   ) {
@@ -117,7 +119,6 @@ export class FormsResolver {
     @Arg("form") form: UpdateFormArgs,
     @Arg("overrideLock") overrideLock?: boolean
   ) {
-    //@ts-expect-error fudge it
     return await this.formsService.updateForm(form, overrideLock);
   }
 }

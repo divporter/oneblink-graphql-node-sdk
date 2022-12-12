@@ -12,6 +12,7 @@ import {
   SchedulingSubmissionEvent,
 } from "../SubmissionEvent";
 import { JSONScalar } from "../JSON";
+import { ApprovalConfiguration, FormApprovalStep } from "../Approval";
 import { NewFormType } from "../../interfaces/NewForm";
 
 @ObjectType()
@@ -28,8 +29,10 @@ export class Form implements NewFormType {
   @Field((type) => [Int])
   formsAppIds!: number[];
 
-  //TODO investigate going deeper on the types
-  @Field((type) => JSONScalar, { nullable: true })
+  @Field((type) => ApprovalConfiguration, {
+    nullable: true,
+    description: "Configuration options that affect the whole approval flow",
+  })
   approvalConfiguration?: {
     approveCannedResponses?: ApprovalTypes.FormApprovalCannedResponse[];
     clarificationRequestCannedResponses?: ApprovalTypes.FormApprovalCannedResponse[];
@@ -40,7 +43,7 @@ export class Form implements NewFormType {
   @Field((type) => [FormWorkFlowEvent], { nullable: true })
   approvalEvents?: SubmissionEventTypes.FormWorkflowEvent[];
 
-  @Field((type) => [JSONScalar], { nullable: true })
+  @Field((type) => [FormApprovalStep], { nullable: true })
   approvalSteps?: ApprovalTypes.FormApprovalFlowStep[];
 
   @Field((type) => String)
@@ -120,8 +123,7 @@ export class CreateFormArgs
   @Field((type) => [Int])
   formsAppIds!: number[];
 
-  //TODO investigate going deeper on the types
-  @Field((type) => JSONScalar, { nullable: true })
+  @Field((type) => ApprovalConfiguration, { nullable: true })
   approvalConfiguration?: {
     approveCannedResponses?: ApprovalTypes.FormApprovalCannedResponse[];
     clarificationRequestCannedResponses?: ApprovalTypes.FormApprovalCannedResponse[];
@@ -132,7 +134,7 @@ export class CreateFormArgs
   @Field((type) => [FormWorkFlowEvent], { nullable: true })
   approvalEvents?: SubmissionEventTypes.FormWorkflowEvent[];
 
-  @Field((type) => [JSONScalar], { nullable: true })
+  @Field((type) => [FormApprovalStep], { nullable: true })
   approvalSteps?: ApprovalTypes.FormApprovalFlowStep[];
 
   @Field((type) => String)

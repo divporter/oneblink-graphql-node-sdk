@@ -1,6 +1,7 @@
 import { FormTypes } from "@oneblink/types";
 import { Field, ObjectType, ClassType } from "type-graphql";
 import { JSONScalar } from "../JSON";
+import { ConditionalPredicate } from "../Condition";
 
 @ObjectType()
 export class _FormElementBase {
@@ -25,7 +26,7 @@ export class _FormElementBase {
   })
   requiresAllConditionallyShowPredicates?: boolean;
 
-  @Field((type) => [JSONScalar], {
+  @Field((type) => [ConditionalPredicate], {
     nullable: true,
     description: "Predicates to evaluate.",
   })
