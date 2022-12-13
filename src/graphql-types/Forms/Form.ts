@@ -123,7 +123,7 @@ export class CreateFormArgs
   @Field((type) => [Int])
   formsAppIds!: number[];
 
-  @Field((type) => ApprovalConfiguration, { nullable: true })
+  @Field((type) => JSONScalar, { nullable: true })
   approvalConfiguration?: {
     approveCannedResponses?: ApprovalTypes.FormApprovalCannedResponse[];
     clarificationRequestCannedResponses?: ApprovalTypes.FormApprovalCannedResponse[];
@@ -131,10 +131,10 @@ export class CreateFormArgs
     denyCannedResponses?: ApprovalTypes.FormApprovalCannedResponse[];
   };
 
-  @Field((type) => [FormWorkFlowEvent], { nullable: true })
+  @Field((type) => [JSONScalar], { nullable: true })
   approvalEvents?: SubmissionEventTypes.FormWorkflowEvent[];
 
-  @Field((type) => [FormApprovalStep], { nullable: true })
+  @Field((type) => [JSONScalar], { nullable: true })
   approvalSteps?: ApprovalTypes.FormApprovalFlowStep[];
 
   @Field((type) => String)
@@ -146,10 +146,10 @@ export class CreateFormArgs
   @Field({ nullable: true })
   description!: string;
 
-  @Field((type) => [FormWorkFlowEvent], { nullable: true })
+  @Field((type) => [JSONScalar], { nullable: true })
   draftEvents?: SubmissionEventTypes.FormWorkflowEvent[];
 
-  @Field((type) => FormServerValidation, { nullable: true })
+  @Field((type) => JSONScalar, { nullable: true })
   externalIdGeneration?: FormTypes.FormServerValidation & {};
 
   @Field()
@@ -167,7 +167,7 @@ export class CreateFormArgs
   @Field()
   organisationId!: string;
 
-  @Field((type) => [FormPaymentEvent], { nullable: true })
+  @Field((type) => [JSONScalar], { nullable: true })
   paymentEvents?: SubmissionEventTypes.FormPaymentEvent[];
 
   @Field((type) => String)
@@ -182,13 +182,13 @@ export class CreateFormArgs
   @Field({ nullable: true })
   redirectUrl?: string;
 
-  @Field((type) => [SchedulingSubmissionEvent], { nullable: true })
+  @Field((type) => [JSONScalar], { nullable: true })
   schedulingEvents?: SubmissionEventTypes.FormSchedulingEvent[];
 
-  @Field((type) => FormServerValidation, { nullable: true })
+  @Field((type) => JSONScalar, { nullable: true })
   serverValidation?: FormTypes.FormServerValidation & {};
 
-  @Field((type) => [FormWorkFlowEvent])
+  @Field((type) => [JSONScalar])
   submissionEvents!: SubmissionEventTypes.FormWorkflowEvent[];
 
   @Field((type) => [String])
