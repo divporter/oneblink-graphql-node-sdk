@@ -1,2 +1,2 @@
 import "reflect-metadata";
-export { Forms } from "../src/schemas/forms";
+export { Forms } from "./schemas/forms";

@@ -66,7 +66,7 @@ The underlying instance and static methods are still available too, e.g.
 ```javascript
 import { Forms } from 'oneblink-graphql-sdk";
 
-Forms.validatFormEvent(
+Forms.validateFormEvent(
   [],
   {
     type: "CALLBACK",
