@@ -313,6 +313,7 @@ function EmailConfigurationMixin<TClassType extends ClassType>(
 
     @Field((type) => EmailTemplate, {
       description: "A reference to a custom template for the email body.",
+      nullable: true,
     })
     emailTemplate?: {
       id: number;
